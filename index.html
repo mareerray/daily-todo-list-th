@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>รายการสิ่งที่ต้องทำประจำวัน</title>
+</head>
+<body>
+    <div class="todo-app">
+        <!-- TITLE SECTION -->
+        <div class="title-section">
+            <h1 class="logo-title">วางแผน &lt;ประจำวัน&gt;</h1>
+        </div>
+
+        <!-- SUBTITLE SECTION -->
+        <div class="subtitle-section">
+            <h3 class="logo-subtitle">by มยุรี เรือนสติ</h3>
+            <div class="social-icons">
+                <a href="https://github.com/mareerray" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/mayuree-reunsati" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- HEADER -->
+        <header>
+            <div class="selected-date-display" id="selectedDateDisplay"></div>
+            <button class="date-nav-btn" id="prevDateBtn"><i class="bi bi-chevron-left"></i></button>
+            <button class="thai-calendar-btn" id="thaiCalendarBtn">
+                <i class="bi bi-calendar3"></i>
+            </button>
+            <button class="date-nav-btn" id="nextDateBtn"><i class="bi bi-chevron-right"></i></button>
+        </header>
+
+        <!-- THAI CALENDAR WIDGET -->
+        <div class="thai-calendar-overlay" id="thaiCalendarOverlay">
+            <div class="thai-calendar-widget">
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" id="prevMonthBtn"><i class="bi bi-chevron-left"></i></button>
+                    <h3 id="calendarMonthYear"></h3>
+                    <button class="calendar-nav-btn" id="nextMonthBtn"><i class="bi bi-chevron-right"></i></button>
+                </div>
+                <div class="calendar-weekdays">
+                    <div>อา</div>
+                    <div>จ</div>
+                    <div>อ</div>
+                    <div>พ</div>
+                    <div>พฤ</div>
+                    <div>ศ</div>
+                    <div>ส</div>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
+                <div class="calendar-footer">
+                    <button class="calendar-today-btn" id="calendarTodayBtn">วันนี้</button>
+                    <button class="calendar-close-btn" id="calendarCloseBtn">ปิด</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- INPUT SECTION -->
+        <div class="input-container">
+            <form>
+                <div class="input-group">
+                    <select class="priority-select" title="Priority" id="prioritySelect">
+                        <option value="high">🔴 ด่วน</option>
+                        <option value="medium" selected>🟡 ปานกลาง</option>
+                        <option value="low">🔵 ไม่ด่วน</option>
+                    </select>
+                    <datalist id="priorityDescriptions">
+                        <option data-value="high">🔴 ด่วน - ทำทันที (งานที่ต้องการความสนใจทันที)</option>
+                        <option data-value="medium">🟡 ปานกลาง - ทำให้เสร็จเร็วๆ นี้ (งานที่ต้องทำวันนี้)</option>
+                        <option data-value="low">🔵 ไม่ด่วน - วางแผนสำหรับภายหลัง (งานที่สามารถรอได้)</option>
+                    </datalist>
+                    <input type="text" class="todo-input" placeholder="เพิ่มงานใหม่ ..." maxlength="50">
+                    <button class="todo-button" type="submit">
+                        <i class="bi bi-plus-circle-fill"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="filter-sort-container">
+                <div class="select">
+                    <select name="todos" class="filter-todo">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="completed">เสร็จแล้ว</option>
+                        <option value="uncompleted">ยังไม่เสร็จ</option>
+                        <option value="high">🔴 ด่วน</option>
+                        <option value="medium">🟡 ปานกลาง</option>
+                        <option value="low">🔵 ไม่ด่วน</option>
+                    </select>
+                </div>
+                <button class="sort-btn"><i class="bi bi-sort-down fs-4"></i>ลำดับความสำคัญ</button>
+            </div>
+        </div>
+
+        <!-- PRIORITY LEGEND -->
+        <div class="priority-legend">
+            <span class="legend-item"><span class="legend-dot high"></span> <strong>ด่วน:</strong> ทำทันที</span>
+            <span class="legend-item"><span class="legend-dot medium"></span> <strong>ปานกลาง:</strong> ทำให้เสร็จเร็วๆ นี้</span>
+            <span class="legend-item"><span class="legend-dot low"></span> <strong>ไม่ด่วน:</strong> วางแผนสำหรับภายหลัง</span>
+        </div>
+    </div>
+        <!-- TODO LIST SECTION -->
+        <div class="todo-container">
+            <ul class="todo-list"></ul>
+        </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Add descriptions to priority select options
+        const priorityDescriptions = {
+            high: "🔴 High - Do it now (Tasks that need immediate attention)",
+            medium: "🟡 Medium - Finish soon (Tasks to complete today)",
+            low: "🔵 Low - Plan for later (Tasks that can wait)"
+        };
+
+        const prioritySelectEl = document.getElementById('prioritySelect');
+
+        // Add title attributes to options for tooltip display
+        prioritySelectEl.querySelectorAll('option').forEach(option => {
+            option.title = priorityDescriptions[option.value];
+        });
+    </script>
+</body>
+</html>
