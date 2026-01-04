@@ -208,6 +208,13 @@ function addTodo(event) {
     trashButton.innerHTML = '<i class="bi bi-trash-fill"></i>';
     trashButton.classList.add('trash-btn');
     todoDiv.appendChild(trashButton);
+    
+    // Remove empty message if it exists
+    const emptyMsg = todoList.querySelector('.empty-message');
+    if(emptyMsg) {
+        emptyMsg.remove();
+    }
+    
     //Append to LIST
     todoList.appendChild(todoDiv);
     //Clear todo Input Value
@@ -452,5 +459,5 @@ function removeLocalTodos(todo) {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+    navigator.serviceWorker.register('sw.js');
 }
