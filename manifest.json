@@ -1,6 +1,6 @@
 {
-    "name": "Todo List App",
-    "short_name": "DailyTodoApp",
+    "name": "ลิสต์งานประจำวัน",
+    "short_name": "งานวันนี้",
     "start_url": "/daily-todo-list-th/",
     "display": "standalone",
     "background_color": "#303030",
